@@ -5,6 +5,12 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# application.yml파일 무시
+application.yml
+
+# .gitignore에 추가
+**/.env
+
 ### STS ###
 .apt_generated
 .classpath
