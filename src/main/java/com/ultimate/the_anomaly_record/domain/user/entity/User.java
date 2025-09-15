@@ -1,5 +1,7 @@
 package com.ultimate.the_anomaly_record.domain.user.entity;
 
+import com.ultimate.the_anomaly_record.domain.user.entity.enums.LoginType;
+import com.ultimate.the_anomaly_record.domain.user.entity.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +22,13 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private LoginType loginType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserStatus status = UserStatus.ACTIVE;
 
 }
