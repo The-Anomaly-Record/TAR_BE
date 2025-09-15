@@ -25,13 +25,11 @@ public class EmailVerificationController {
     @Operation(summary = "회원가입용 인증번호 이메일 전송")
     @PostMapping("/request-code")
     public ResponseEntity<?> sendCode(
-            @RequestBody @Validated EmailVerificationRequest.SendCode request){
-        service.sendVerificationCode(request.getEmail());
-
-        EmailVerificationResponse.SendCode response = EmailVerificationResponse.SendCode.builder()
-                .build();
-
-        return ResponseEntity.ok(response);
+            @RequestBody @Validated EmailVerificationRequest.SendCode request) {
+        EmailVerificationResponse.SendCode response = service.sendVerificationCode(request.getEmail());
+        return ResponseEntity
+                .status(response.isSuccess() ? 200 : 400)
+                .body(response);
     }
 
     @Operation(summary = "회원가입용 인증번호 이메일 검증")

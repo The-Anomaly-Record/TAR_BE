@@ -5,6 +5,8 @@ import com.ultimate.the_anomaly_record.domain.auth.entity.EmailVerification;
 import com.ultimate.the_anomaly_record.domain.auth.exception.EmailErrorCode;
 import com.ultimate.the_anomaly_record.domain.auth.exception.EmailException;
 import com.ultimate.the_anomaly_record.domain.auth.repository.EmailVerificationRepository;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -25,7 +27,7 @@ public class EmailVerificationService {
 
 
     public EmailVerificationResponse.SendCode sendVerificationCode(String email) {
-        // 이전 코드 중 만료되지 않은 최근 코드가 있으면 삭제
+
         emailVerificationRepository.findTopByEmailOrderByExpiredTimeDesc(email)
                 .ifPresent(emailVerification -> {
                     if (!emailVerification.isVerified() &&
@@ -44,6 +46,7 @@ public class EmailVerificationService {
                 .build();
 
         emailVerificationRepository.save(emailVerification);
+
         // 이메일 발송
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -51,18 +54,27 @@ public class EmailVerificationService {
             message.setSubject("회원가입 인증번호");
             message.setText("인증번호: " + code + "\n유효시간: 5분");
             mailSender.send(message);
+
+            return EmailVerificationResponse.SendCode.builder()
+                    .success(true)
+                    .message("인증번호 전송 완료")
+                    .build();
         } catch (Exception e) {
-            System.err.println("이메일 발송 실패: " + e.getMessage());
+
             return EmailVerificationResponse.SendCode.builder()
                     .success(false)
                     .message("이메일 전송 실패")
                     .build();
         }
+    }
 
-        return EmailVerificationResponse.SendCode.builder()
-                .success(true)
-                .message("인증번호 전송 완료")
-                .build();
+    private void validateEmailSyntax(String email) {
+        try {
+            InternetAddress address = new InternetAddress(email);
+            address.validate(); // RFC 준수 문법 검사
+        } catch (AddressException ex) {
+            throw new EmailException(EmailErrorCode.INVALID_EMAIL_FORMAT); // 400 매핑
+        }
     }
 
     public EmailVerificationResponse.VerifyCode verifyCode(String email, String code){

@@ -10,7 +10,8 @@ public enum EmailErrorCode {
     INVALID_CODE("EV002", "인증번호가 올바르지 않습니다."),
     EXPIRED("EV003", "인증번호가 만료되었습니다."),
     ALREADY_VERIFIED("EV004", "이미 인증된 이메일입니다."),
-    NOT_VERIFIED("EV005", "인증번호가 인증되지 않았습니다.");
+    NOT_VERIFIED("EV005", "인증번호가 인증되지 않았습니다."),
+    INVALID_EMAIL_FORMAT("EV006", "올바른 이메일 형식이 아닙니다." );
 
     private final String code;
     private final String message;
