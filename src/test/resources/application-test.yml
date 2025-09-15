@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:tar_test;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+  mail:    # 테스트에서는 더미 처리
+    host: localhost
+    port: 2525
+    username:
+    password:
+
+springdoc:
+  api-docs.enabled: false
+  swagger-ui.enabled: false
+
+logging:
+  level:
+    root: WARN
