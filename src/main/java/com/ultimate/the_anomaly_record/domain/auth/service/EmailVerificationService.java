@@ -6,6 +6,7 @@ import com.ultimate.the_anomaly_record.domain.auth.exception.EmailErrorCode;
 import com.ultimate.the_anomaly_record.domain.auth.exception.EmailException;
 import com.ultimate.the_anomaly_record.domain.auth.repository.EmailVerificationRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmailVerificationService {
 
     private final EmailVerificationRepository emailVerificationRepository;
     //실제 이메일 발송 로직 추가
     private final JavaMailSender mailSender;
+
 
     public EmailVerificationResponse.SendCode sendVerificationCode(String email) {
         // 이전 코드 중 만료되지 않은 최근 코드가 있으면 삭제
@@ -41,7 +44,6 @@ public class EmailVerificationService {
                 .build();
 
         emailVerificationRepository.save(emailVerification);
-
         // 이메일 발송
         try {
             SimpleMailMessage message = new SimpleMailMessage();

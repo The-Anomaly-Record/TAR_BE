@@ -36,8 +36,8 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.jboss.logging:jboss-logging:3.4.3.Final'
 
-    // Swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    // Swagger 2.6.0 -> 2.7.0 (https://dodo-studying.tistory.com/586)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
 
     // 스프링 시큐리티를 사용하기 위한 스타터 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -50,7 +50,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // 이메일 인증
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     // smtp 이메일 및 db 테스트 오류 반영을 위한 h2라이브러리
     testImplementation 'com.h2database:h2'
@@ -58,6 +58,7 @@ dependencies {
     // jwt인증
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly  'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly  'io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 tasks.named('test') {

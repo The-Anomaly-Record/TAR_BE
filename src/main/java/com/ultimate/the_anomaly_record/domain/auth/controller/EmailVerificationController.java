@@ -5,6 +5,7 @@ import com.ultimate.the_anomaly_record.domain.auth.dto.EmailVerificationResponse
 import com.ultimate.the_anomaly_record.domain.auth.service.EmailVerificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api/v0/email-auth")
 public class EmailVerificationController {
 
@@ -27,14 +29,12 @@ public class EmailVerificationController {
         service.sendVerificationCode(request.getEmail());
 
         EmailVerificationResponse.SendCode response = EmailVerificationResponse.SendCode.builder()
-                .success(true)
-                .message("인증번호 전송 완료")
                 .build();
 
         return ResponseEntity.ok(response);
     }
 
-//    @Operation(summary = "회원가입용 인증번호 이메일 검증")
+    @Operation(summary = "회원가입용 인증번호 이메일 검증")
     @PostMapping("/verify-code")
     public ResponseEntity<?> verifyCode(
             @RequestBody @Validated EmailVerificationRequest.VerifyCode request){
