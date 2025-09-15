@@ -3,6 +3,7 @@ package com.ultimate.the_anomaly_record.domain.auth.controller;
 import com.ultimate.the_anomaly_record.domain.auth.dto.EmailVerificationRequest;
 import com.ultimate.the_anomaly_record.domain.auth.dto.EmailVerificationResponse;
 import com.ultimate.the_anomaly_record.domain.auth.service.EmailVerificationService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +20,7 @@ public class EmailVerificationController {
 
     private final EmailVerificationService service;
 
-//    @Operation(summary = "회원가입용 인증번호 이메일 전송")
+    @Operation(summary = "회원가입용 인증번호 이메일 전송")
     @PostMapping("/request-code")
     public ResponseEntity<?> sendCode(
             @RequestBody @Validated EmailVerificationRequest.SendCode request){
