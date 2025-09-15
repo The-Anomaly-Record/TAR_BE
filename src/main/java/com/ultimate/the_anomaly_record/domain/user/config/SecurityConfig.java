@@ -36,8 +36,8 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/swagger-resources/**",
-                                "/api/v0/users/signup", // 회원가입
-                                "/api/v0/users/login", // 로그인
+                                "/api/v0/user/signup", // 회원가입
+                                "/api/v0/user/login", // 로그인
                                 "/api/v0/email-auth/**" // 이메일 인증
                         ).permitAll()
                         .anyRequest().authenticated()
