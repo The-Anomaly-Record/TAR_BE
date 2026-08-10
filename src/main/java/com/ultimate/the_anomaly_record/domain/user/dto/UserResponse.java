@@ -20,5 +20,8 @@ public class UserResponse {
     public static class LoginResponse {
         private String email;
         private String message;
+
+        private String token;
+        private String refreshToken;
     }
 }

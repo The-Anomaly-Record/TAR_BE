@@ -62,7 +62,7 @@ public class AuthController {
     })
     @PostMapping("/login")
     public ResponseEntity<UserResponse.LoginResponse> login(@RequestBody @Valid UserRequest.LoginRequest request) {
-        UserResponse.LoginResponse response = userService.login(request);
+        UserResponse.LoginResponse response = userService.login(request.getEmail(), request.getPassword());
         return ResponseEntity.ok(response);
     }
 }
