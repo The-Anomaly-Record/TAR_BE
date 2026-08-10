@@ -12,7 +12,7 @@ public class SwaggerConfig {
         Info info = new Info()
                 .version("v1.0") //버전
                 .title("User API")
-                .description("TheAnomalyRecord 유니티 내장서버");
+                .description("Unreal5 클라이어트 내장서버");
         return new OpenAPI()
                 .info(info);
     }
