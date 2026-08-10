@@ -4,20 +4,20 @@
 ## 🔑 Core Considerations
 
 ### 1. 통신 방식
-- 매칭 결과를 UE5 클라이언트에 전달하기 위해 **REST API만으로는 부족**합니다.
-- 선택지:
+- 매칭 결과를 UE5 클라이언트에 전달하기 위해 **REST API만으로는 부족**
+- 선택지 정리:
   - **WebSocket** (`global/config/WebSocketConfig.java`) → 실시간 푸시 알림
   - **Polling** → 클라이언트가 주기적으로 매칭 상태 확인
 
 ### 2. 상태 관리
-- 매칭 큐는 **속도가 중요**하므로 RDB 대신 **Redis 같은 인메모리 저장소** 사용 권장
+- 매칭 큐는 **속도가 중요**하므로 RDB 대신 **Redis 같은 인메모리 저장소** 사용
 - Redis를 통해 빠른 조회/삭제/매칭 연산 수행
 
 ### 3. 세션 할당
 - 매칭 성립 후 UE5 Dedicated Server를 어떻게 띄울지 결정 필요
   - **Agones** (Kubernetes 기반 게임 서버 오케스트레이션)
   - **직접 관리** (서버 프로세스 직접 실행 및 모니터링)
-- 선택한 방식에 따라 `SessionAllocator` 구현이 달라짐
+- 선택한 방식에 따라 `SessionAllocator` 구현이 달라질 예정
 
 ---
 
