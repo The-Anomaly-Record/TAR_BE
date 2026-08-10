@@ -4,9 +4,10 @@ import com.ultimate.the_anomaly_record.domain.auth.entity.EmailVerification;
 import com.ultimate.the_anomaly_record.domain.auth.entity.RefreshToken;
 import com.ultimate.the_anomaly_record.domain.auth.exception.EmailErrorCode;
 import com.ultimate.the_anomaly_record.domain.auth.exception.EmailException;
+import com.ultimate.the_anomaly_record.domain.auth.exception.JwtErrorCode;
+import com.ultimate.the_anomaly_record.domain.auth.exception.JwtException;
 import com.ultimate.the_anomaly_record.domain.auth.exception.RefreshTokenErrorCode;
 import com.ultimate.the_anomaly_record.domain.auth.exception.RefreshTokenException;
-import com.ultimate.the_anomaly_record.domain.auth.jwt.JwtUtil;
 import com.ultimate.the_anomaly_record.domain.auth.repository.EmailVerificationRepository;
 import com.ultimate.the_anomaly_record.domain.auth.repository.RefreshTokenRepository;
 import com.ultimate.the_anomaly_record.domain.user.dto.UserRequest;
@@ -14,11 +15,11 @@ import com.ultimate.the_anomaly_record.domain.user.dto.UserResponse;
 import com.ultimate.the_anomaly_record.domain.user.entity.User;
 import com.ultimate.the_anomaly_record.domain.user.entity.enums.LoginType;
 import com.ultimate.the_anomaly_record.domain.user.entity.enums.UserStatus;
+import com.ultimate.the_anomaly_record.domain.user.exception.UserErrorCode;
 import com.ultimate.the_anomaly_record.domain.user.exception.UserException;
 import com.ultimate.the_anomaly_record.domain.user.repository.UserRepository;
-import com.ultimate.the_anomaly_record.global.apiPayload.code.status.ErrorStatus;
-import com.ultimate.the_anomaly_record.global.apiPayload.exception.JwtErrorCode;
-import com.ultimate.the_anomaly_record.global.apiPayload.exception.JwtException;
+import com.ultimate.the_anomaly_record.global.response.ErrorStatus;
+import com.ultimate.the_anomaly_record.global.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -61,7 +62,7 @@ public class UserService {
 
         // 이미 가입된 계정인지 확인
         if (userRepository.existsByEmail(email)) {
-            throw new UserException(ErrorStatus.USER_ALREADY_EXISTS);
+            throw new UserException(UserErrorCode.USER_ALREADY_EXISTS);
         }
 
         User user = User.builder()
@@ -76,7 +77,7 @@ public class UserService {
             log.info("[Signup] 회원가입 완료: {}", saved.getEmail());
             return saved.getId();
         } catch (DataIntegrityViolationException dup) {
-            throw new UserException(ErrorStatus.USER_ALREADY_EXISTS);
+            throw new UserException(UserErrorCode.USER_ALREADY_EXISTS);
         } catch (Exception e) {
             log.error("[Signup] 회원가입 중 예기치 못한 오류", e);
             throw new UserException(ErrorStatus.INTERNAL_ERROR);
@@ -112,7 +113,7 @@ public class UserService {
             throw new UserException(ErrorStatus.INVALID_INPUT);
         } catch (org.springframework.security.core.userdetails.UsernameNotFoundException e) {
             log.error("[Login] 사용자를 찾을 수 없음: {}", email);
-            throw new UserException(ErrorStatus.USER_NOT_FOUND);
+            throw new UserException(UserErrorCode.USER_NOT_FOUND);
         } catch (Exception e) {
             log.error("[Login] 인증 중 오류: {}", e.getMessage(), e);
             throw new UserException(ErrorStatus.INVALID_INPUT);
@@ -122,7 +123,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> {
                     log.error("[Login] 사용자 없음: {}", email);
-                    return new UserException(ErrorStatus.USER_NOT_FOUND);
+                    return new UserException(UserErrorCode.USER_NOT_FOUND);
                 });
 
         // 토큰 생성

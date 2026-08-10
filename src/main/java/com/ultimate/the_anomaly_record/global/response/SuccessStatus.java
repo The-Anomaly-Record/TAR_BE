@@ -1,7 +1,5 @@
-package com.ultimate.the_anomaly_record.global.apiPayload.code.status;
+package com.ultimate.the_anomaly_record.global.response;
 
-import com.ultimate.the_anomaly_record.global.apiPayload.code.BaseCode;
-import com.ultimate.the_anomaly_record.global.apiPayload.code.ReasonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -32,7 +30,6 @@ public enum SuccessStatus implements BaseCode {
                 .code(code)
                 .isSuccess(true)
                 .httpStatus(httpStatus)
-                .build()
-                ;
+                .build();
     }
 }

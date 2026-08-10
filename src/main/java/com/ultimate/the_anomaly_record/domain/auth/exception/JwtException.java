@@ -1,15 +1,10 @@
 package com.ultimate.the_anomaly_record.domain.auth.exception;
 
-public class JwtException extends RuntimeException {
+import com.ultimate.the_anomaly_record.global.exception.GeneralException;
 
-    private final JwtErrorCode errorCode;
+public class JwtException extends GeneralException {
 
     public JwtException(JwtErrorCode errorCode) {
-        super(errorCode.getMessage());
-        this.errorCode = errorCode;
-    }
-
-    public JwtErrorCode getErrorCode() {
-        return errorCode;
+        super(errorCode);
     }
 }

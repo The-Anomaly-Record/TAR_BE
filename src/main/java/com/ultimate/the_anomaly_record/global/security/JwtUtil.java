@@ -1,12 +1,12 @@
-package com.ultimate.the_anomaly_record.domain.auth.jwt;
+package com.ultimate.the_anomaly_record.global.security;
 
-import com.ultimate.the_anomaly_record.global.apiPayload.exception.JwtErrorCode;
+import com.ultimate.the_anomaly_record.domain.auth.exception.JwtErrorCode;
+import com.ultimate.the_anomaly_record.domain.auth.exception.JwtException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.ultimate.the_anomaly_record.global.apiPayload.exception.JwtException;
 
 import java.security.Key;
 import java.util.Base64;
@@ -55,6 +55,13 @@ public class JwtUtil {
         }
     }
 
+    public String extractToken(String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+        return null;
+    }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -97,7 +104,6 @@ public class JwtUtil {
         }
     }
 
-    // 토큰 만료 시간(ms) 가져오기
     public long getExpiration(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
@@ -112,5 +118,4 @@ public class JwtUtil {
             throw new JwtException(JwtErrorCode.INVALID_TOKEN);
         }
     }
-
 }

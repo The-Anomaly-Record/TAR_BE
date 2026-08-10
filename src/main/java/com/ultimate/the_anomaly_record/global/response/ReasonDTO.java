@@ -1,4 +1,4 @@
-package com.ultimate.the_anomaly_record.global.apiPayload.code;
+package com.ultimate.the_anomaly_record.global.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -14,5 +14,5 @@ public class ReasonDTO {
     private final String code;
     private final String message;
 
-    public boolean getIsSuccess(){return isSuccess;}
+    public boolean getIsSuccess() { return isSuccess; }
 }

@@ -1,11 +1,12 @@
 package com.ultimate.the_anomaly_record.domain.auth.exception;
 
+import com.ultimate.the_anomaly_record.global.exception.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum JwtErrorCode {
+public enum JwtErrorCode implements BaseErrorCode {
     INVALID_TOKEN("JWT001", "유효하지 않은 토큰입니다."),
     EXPIRED_TOKEN("JWT002", "만료된 토큰입니다."),
     UNSUPPORTED_TOKEN("JWT003", "지원되지 않는 토큰 형식입니다."),

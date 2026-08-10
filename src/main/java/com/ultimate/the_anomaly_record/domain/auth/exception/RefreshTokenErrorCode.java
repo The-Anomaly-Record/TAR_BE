@@ -1,11 +1,12 @@
 package com.ultimate.the_anomaly_record.domain.auth.exception;
 
+import com.ultimate.the_anomaly_record.global.exception.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RefreshTokenErrorCode {
+public enum RefreshTokenErrorCode implements BaseErrorCode {
     NOT_FOUND("RT001", "Refresh Token이 존재하지 않습니다."),
     INVALID("RT002", "유효하지 않은 Refresh Token입니다."),
     MISMATCH("RT003", "Refresh Token이 일치하지 않습니다."),

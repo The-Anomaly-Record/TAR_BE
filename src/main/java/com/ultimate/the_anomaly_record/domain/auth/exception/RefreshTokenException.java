@@ -1,15 +1,10 @@
 package com.ultimate.the_anomaly_record.domain.auth.exception;
 
-import lombok.Getter;
+import com.ultimate.the_anomaly_record.global.exception.GeneralException;
 
-@Getter
-public class RefreshTokenException extends RuntimeException {
-
-    private final RefreshTokenErrorCode errorCode;
+public class RefreshTokenException extends GeneralException {
 
     public RefreshTokenException(RefreshTokenErrorCode errorCode) {
-        super(errorCode.getMessage());
-        this.errorCode = errorCode;
+        super(errorCode);
     }
 }
-

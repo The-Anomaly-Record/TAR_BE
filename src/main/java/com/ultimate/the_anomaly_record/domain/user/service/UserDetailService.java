@@ -1,8 +1,8 @@
 package com.ultimate.the_anomaly_record.domain.user.service;
 
+import com.ultimate.the_anomaly_record.domain.user.exception.UserErrorCode;
 import com.ultimate.the_anomaly_record.domain.user.exception.UserException;
 import com.ultimate.the_anomaly_record.domain.user.repository.UserRepository;
-import com.ultimate.the_anomaly_record.global.apiPayload.code.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +19,6 @@ public class UserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserException(ErrorStatus.USER_NOT_FOUND));
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
     }
 }
